@@ -258,42 +258,6 @@ function openhouse_configure_commentnotify() {
   variable_set('comment_notify_node_types', $content_types);
 }
 
-function openhouse_install_tasks($install_state) {
-  $task['secure_pages'] = array(
-    'display_name' => st('Install configurations for Secure Pages'),
-    'display' => FALSE,
-    'type' => 'normal',
-    'run' => INSTALL_TASK_RUN_IF_REACHED,
-    'function' => 'openhouse_configure_securepages',
-  );
-  $task['comment_notify'] = array(
-    'display_name' => st('Install configurations for Comment Notify'),
-    'display' => FALSE,
-    'type' => 'normal',
-    'run' => INSTALL_TASK_RUN_IF_REACHED,
-    'function' => 'openhouse_configure_commentnotify',
-  );
-
-  require_once(drupal_get_path('module', 'apps') . '/apps.profile.inc');
-  $server = array(
-    'machine name' => 'openhouse',
-    'default apps' => array(
-      'openhouse_demo_content',
-      'openhouse_password'
-    ),
-    'required apps' => array(
-      'openhouse_demo_content',
-      'openhouse_password'
-    ),
-    'default content callback' => '',
-  );
-  $task = $task + apps_profile_install_tasks($install_state, $server);
-
-
-  require_once(drupal_get_path('module', 'apps') . '/apps.profile.inc');
-  $task = array_merge($task, apps_profile_install_tasks($install_state, $server ));
-  return $task;
-}
 
 /**
  * Enable the context ui dialog
